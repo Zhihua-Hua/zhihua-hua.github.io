@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Personal academic homepage for Zhihua Hua, including research interests, news, publications, projects, and contact links."
+    />
+    <title>Zhihua Hua | Personal Homepage</title>
+    <link rel="icon" href="assets/avatar.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="profile-panel" aria-label="Profile">
+        <img class="avatar" id="profile-avatar" src="assets/avatar.svg" alt="Profile avatar" />
+        <h1 id="profile-name">Huazhihua</h1>
+        <p class="name-cn" id="profile-name-cn">华志华</p>
+        <p class="affiliation" id="profile-affiliation">Your University / Lab</p>
+        <p class="location" id="profile-location">Shanghai, China</p>
+        <nav class="social-links" id="profile-links" aria-label="External links"></nav>
+      </aside>
+
+      <main class="content">
+        <nav class="content-nav" aria-label="Page sections">
+          <a href="#about">About</a>
+          <a href="#interests">Interests</a>
+          <a href="#news">News</a>
+          <a href="#education">Education</a>
+          <a href="#publications">Publications</a>
+          <a href="#projects">Projects</a>
+        </nav>
+
+        <section class="section" id="about">
+          <h2>Hi there, welcome to my homepage.</h2>
+          <div id="about-content"></div>
+        </section>
+
+        <section class="section" id="interests">
+          <h2>Research Interests</h2>
+          <ul class="interest-list" id="interest-list"></ul>
+        </section>
+
+        <section class="section" id="news">
+          <h2>News</h2>
+          <ul class="timeline" id="news-list"></ul>
+        </section>
+
+        <section class="section" id="education">
+          <h2>Education</h2>
+          <div class="education-list" id="education-list"></div>
+        </section>
+
+        <section class="section" id="publications">
+          <h2>Publications</h2>
+          <ol class="publication-list" id="publication-list"></ol>
+        </section>
+
+        <section class="section" id="projects">
+          <h2>Selected Projects</h2>
+          <div class="project-grid" id="project-grid"></div>
+        </section>
+
+        <footer class="footer">
+          <span>Powered by GitHub Pages.</span>
+          <span>Last updated: <time id="last-updated"></time></span>
+        </footer>
+      </main>
+    </div>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>
