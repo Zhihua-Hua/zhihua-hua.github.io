@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title">
-  <title id="title">Abstract visual perception publication thumbnail</title>
-  <rect width="640" height="400" fill="#f8efe1"/>
-  <path d="M64 308c80-78 143-103 205-74 75 36 134 12 205-84 29-39 59-63 102-74" fill="none" stroke="#0d6f73" stroke-width="18" stroke-linecap="round"/>
-  <path d="M68 110h188M68 154h140M396 296h176" stroke="#1d2528" stroke-width="12" stroke-linecap="round"/>
-  <circle cx="290" cy="229" r="34" fill="#ffffff" stroke="#b7791f" stroke-width="10"/>
-  <circle cx="449" cy="182" r="28" fill="#ffffff" stroke="#b7791f" stroke-width="10"/>
-  <rect x="394" y="70" width="150" height="94" rx="8" fill="#ffffff" stroke="#dac9ad" stroke-width="4"/>
-</svg>

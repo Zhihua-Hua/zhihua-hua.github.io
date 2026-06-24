@@ -4,7 +4,7 @@ const profile = {
   affiliation: "Fudan University",
   location: "Shanghai, China",
   email: "zhhua24@m.fudan.edu.cn",
-  avatar: "assets/avatar.svg",
+  avatar: "assets/profile-photo-srgb.jpg",
   links: [
     { label: "Email", icon: "email", url: "mailto:zhhua24@m.fudan.edu.cn" },
     { label: "GitHub", icon: "github", url: "https://github.com/Zhihua-Hua" },
@@ -15,14 +15,20 @@ const profile = {
 };
 
 const about = [
-  "I am interested in building reliable intelligent systems that connect perception, reasoning, and real-world interaction. My recent work focuses on machine learning, software systems, and practical AI applications.",
-  "I enjoy turning research ideas into reproducible systems, readable tools, and polished demos. This page collects my recent updates, selected work, and projects in a compact academic format.",
+  [
+    "I am a second-year master's student at Fudan University, advised by Prof. ",
+    { label: "Wenchao Ding", url: "https://wenchaoding.github.io/personal/index.html" },
+    " at ",
+    { label: "MAGIC LAB", url: "http://www.fudanmagiclab.com/" },
+    ".",
+  ],
+  "My previous research centered on autonomous driving, including end-to-end autonomous driving, VLA, and diffusion-based planning or generation. I am now increasingly focused on embodied AI, especially world action models and reinforcement learning methods that support robust manipulation.",
+  "Previously, I received my Bachelor's degree in ME from Tongji University in 2024.",
 ];
 
 const interests = [
-  "Artificial Intelligence: multimodal learning, agents, applied machine learning",
-  "Computer Vision: visual perception, scene understanding, data-centric pipelines",
-  "Software Systems: full-stack applications, automation, reproducible engineering",
+  "Embodied AI, World Action Model, Representation Learning, Reinforcement Learning",
+  "Autonomous Driving, VLA, Diffusion Model"
 ];
 
 const news = [
@@ -60,7 +66,7 @@ const publications = [
     title: "Beyond Imitation: Learning Safe End-to-End Autonomous Driving from Hard Negatives",
     authors: "Junli Wang, Zhihua Hua, Xueyi Liu, Zebin Xing, Haochen Tian, Kun Ma, Hangjun Ye, Guang Chen, Long Chen, Qichao Zhang",
     venue: "ECCV 2026",
-    image: "",
+    image: "assets/publication-eccv-hard-negatives.png",
     links: [
       { label: "arXiv", url: "https://arxiv.org/abs/2605.19771" },
       { label: "PDF", url: "https://arxiv.org/pdf/2605.19771" },
@@ -71,7 +77,7 @@ const publications = [
     title: "Hammer: Hierarchical Attention Generation Meets Mixture-of-Experts Evaluation for End-to-End Autonomous Driving",
     authors: "Junli Wang, Zhihua Hua, Qiang Chen, Xueyi Liu, Wei Zhang, Deheng Qian, Pengfei Li, Junyu Han, Wenchao Ding, Xiaoqing Ye, Yifeng Pan, Qichao Zhang",
     venue: "IEEE RA-L 2026",
-    image: "",
+    image: "assets/publication-ral-hammer.png",
     links: [],
   },
   {
@@ -79,27 +85,14 @@ const publications = [
     authors: "Zhihua Hua, Junli Wang, Pengfei Li, Qihao Jin, Bo Zhang, Kehua Sheng, Yilun Chen, Zhongxue Gan, Wenchao Ding",
     venue: "ICRA 2026",
     image: "assets/publication-sng-vla-pipeline.png",
+    video: "assets/publication-sng-vla-demo.mp4",
+    videoWidth: 1920,
+    videoHeight: 1280,
     links: [
       { label: "arXiv", url: "https://arxiv.org/abs/2604.12208" },
       { label: "PDF", url: "https://arxiv.org/pdf/2604.12208" },
       { label: "Code", url: "https://github.com/Zhihua-Hua/SNG-VLA" },
       { label: "Project Page", url: "https://fudan-magic-lab.github.io/SNG-VLA/" },
-    ],
-  },
-];
-
-const projects = [
-  {
-    title: "Research Toolkit",
-    description: "A reusable codebase for experiments, evaluation, and reproducible reports.",
-    links: [{ label: "GitHub", url: "#" }],
-  },
-  {
-    title: "AI Application Prototype",
-    description: "A full-stack prototype that turns model outputs into an interactive product experience.",
-    links: [
-      { label: "Demo", url: "#" },
-      { label: "Code", url: "#" },
     ],
   },
 ];
@@ -200,7 +193,17 @@ function renderAbout() {
   const container = document.getElementById("about-content");
   about.forEach((paragraph) => {
     const p = document.createElement("p");
-    p.textContent = paragraph;
+    if (Array.isArray(paragraph)) {
+      paragraph.forEach((part) => {
+        if (typeof part === "string") {
+          p.append(document.createTextNode(part));
+        } else {
+          p.append(link(part.label, part.url));
+        }
+      });
+    } else {
+      p.textContent = paragraph;
+    }
     container.append(p);
   });
 }
@@ -269,16 +272,48 @@ function renderPublications() {
     const li = document.createElement("li");
     li.className = "publication";
 
-    const image = item.image
-      ? document.createElement("img")
-      : document.createElement("div");
-    image.className = item.image
+    const media = item.video
+      ? document.createElement("video")
+      : item.image
+        ? document.createElement("img")
+        : document.createElement("div");
+    media.className = item.video || item.image
       ? "publication-thumb"
       : "publication-thumb publication-thumb-empty";
-    if (item.image) {
-      image.src = item.image;
-      image.alt = "";
-      image.loading = "lazy";
+
+    if (item.video) {
+      media.src = item.video;
+      media.poster = item.image || "";
+      if (item.videoWidth && item.videoHeight) {
+        media.width = item.videoWidth;
+        media.height = item.videoHeight;
+        media.style.aspectRatio = `${item.videoWidth} / ${item.videoHeight}`;
+      }
+      media.muted = true;
+      media.defaultMuted = true;
+      media.autoplay = true;
+      media.loop = true;
+      media.playsInline = true;
+      media.preload = "metadata";
+      media.setAttribute("muted", "");
+      media.setAttribute("autoplay", "");
+      media.setAttribute("loop", "");
+      media.setAttribute("playsinline", "");
+      media.title = `${item.title} demo video`;
+      media.setAttribute("aria-label", `${item.title} demo video`);
+      media.addEventListener("click", () => {
+        if (media.paused) {
+          media.play().catch(() => {});
+        } else {
+          media.pause();
+        }
+      });
+    }
+
+    if (!item.video && item.image) {
+      media.src = item.image;
+      media.alt = "";
+      media.loading = "lazy";
     }
 
     const body = document.createElement("div");
@@ -297,29 +332,8 @@ function renderPublications() {
     item.links.forEach((entry) => links.append(link(entry.label, entry.url)));
 
     body.append(title, authorList, links);
-    li.append(image, body);
+    li.append(media, body);
     list.append(li);
-  });
-}
-
-function renderProjects() {
-  const grid = document.getElementById("project-grid");
-  projects.forEach((item) => {
-    const article = document.createElement("article");
-    article.className = "project";
-
-    const title = document.createElement("h3");
-    title.textContent = item.title;
-
-    const description = document.createElement("p");
-    description.textContent = item.description;
-
-    const links = document.createElement("div");
-    links.className = "project-links";
-    item.links.forEach((entry) => links.append(link(entry.label, entry.url, "tag")));
-
-    article.append(title, description, links);
-    grid.append(article);
   });
 }
 
@@ -329,5 +343,4 @@ renderInterests();
 renderNews();
 renderEducation();
 renderPublications();
-renderProjects();
 text("last-updated", "2026-06-15");
